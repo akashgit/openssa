@@ -31,7 +31,7 @@ class OpenAILM(AbstractLM):
 
     def __post_init__(self):
         """Initialize OpenAI client."""
-        self.client: OpenAI = OpenAI(api_key=self.api_key, base_url=self.api_base)
+        self.client: OpenAI = OpenAI(api_key="EMPTY", base_url="http://127.0.0.1:8000/v1")
 
     @classmethod
     def from_defaults(cls) -> OpenAILM:
@@ -41,6 +41,8 @@ class OpenAILM(AbstractLM):
 
     def call(self, messages: LMChatHist, **kwargs) -> ChatCompletion:
         """Call OpenAI LM API and return response object."""
+        print(messages)
+        # messages = [{"role": "system", "content": "You are an AI language model developed by IBM Research. You are a cautious assistant. You carefully follow instructions. You are helpful and harmless and you follow ethical guidelines and promote positive behavior."}] + messages
         return self.client.chat.completions.create(model=self.model,
                                                    messages=messages,
                                                    seed=kwargs.pop('seed', LMConfig.DEFAULT_SEED),

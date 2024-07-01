@@ -44,6 +44,7 @@ class AnLLM:
         self._client = None
         self._aclient = None
         self._additional_kwargs = additional_kwargs
+    
 
     @property
     def client(self):
@@ -114,13 +115,16 @@ class OpenAILLM(AnLLM):
     @property
     def client(self) -> OpenAI:
         if self._client is None:
-            self._client = OpenAI(api_key=self.api_key, base_url=self.api_base)
+            self._client = OpenAI(api_key="EMPTY", base_url="http://127.0.0.1:8000/v1")
+            print(self._client.base_url)
+            # self._client = OpenAI(api_key=self.api_key, base_url=self.api_base)
         return self._client
 
     @property
     def aclient(self) -> AsyncOpenAI:
         if self._aclient is None:
-            self._aclient = AsyncOpenAI(api_key=self.api_key, base_url=self.api_base)
+            self._client = AsyncOpenAI(api_key="EMPTY", base_url="http://127.0.0.1:8000/v1")
+            # self._aclient = AsyncOpenAI(api_key=self.api_key, base_url=self.api_base)
         return self._aclient
 
     @classmethod
